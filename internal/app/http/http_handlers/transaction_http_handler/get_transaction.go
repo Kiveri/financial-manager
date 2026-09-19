@@ -45,7 +45,7 @@ func validateTransactionID(transactionID string) *http_helpers.ValidationError {
 	err := http_helpers.NewValidationError()
 
 	if uuid.Validate(transactionID) != nil {
-		err = err.Add("id", http_helpers.ErrTxtInvalidFormat)
+		err.Add("id", http_helpers.ErrTxtInvalidFormat)
 	}
 
 	if len(err.Violations()) > 0 {

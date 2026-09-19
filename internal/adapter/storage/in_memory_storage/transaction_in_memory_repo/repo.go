@@ -31,3 +31,13 @@ func (r *Repo) GetTransactionByID(_ context.Context, transactionID string) (*mod
 
 	return transaction, nil
 }
+
+func (r *Repo) FindAll(_ context.Context) ([]*model.Transaction, error) {
+	res := make([]*model.Transaction, 0, len(r.storage))
+
+	for _, value := range r.storage {
+		res = append(res, value)
+	}
+
+	return res, nil
+}

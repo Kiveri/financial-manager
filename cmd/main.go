@@ -16,6 +16,7 @@ func main() {
 
 	mux.HandleFunc("POST /transactions", sp.GetTransactionHTTPHandler().CreateTransaction)
 	mux.HandleFunc("GET /transactions/{id}", sp.GetTransactionHTTPHandler().GetTransaction)
+	mux.HandleFunc("GET /transactions", sp.GetTransactionHTTPHandler().ListTransactions)
 
 	fmt.Println("http сервер успешно запущен и готов принимать входящие запросы")
 

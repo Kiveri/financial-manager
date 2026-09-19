@@ -1,4 +1,4 @@
-package transacation_usecase
+package transaction_usecase
 
 import (
 	"context"
