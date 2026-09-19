@@ -9,7 +9,7 @@ import (
 
 	"github.com/Kiveri/financial-manager/internal/app/http/http_helpers"
 	"github.com/Kiveri/financial-manager/internal/domain/model"
-	"github.com/Kiveri/financial-manager/internal/service/usecases/transacation_usecase"
+	"github.com/Kiveri/financial-manager/internal/service/usecases/transaction_usecase"
 )
 
 type createTransactionRequest struct {
@@ -59,41 +59,41 @@ func (h *Handler) CreateTransaction(rw http.ResponseWriter, r *http.Request) {
 }
 
 func validateCreateTransactionRequest(req createTransactionRequest) (
-	transacation_usecase.CreateTransactionReq, *http_helpers.ValidationError,
+	transaction_usecase.CreateTransactionReq, *http_helpers.ValidationError,
 ) {
 	err := http_helpers.NewValidationError()
 
 	if req.Amount <= 0 {
-		err = err.Add("amount", http_helpers.ErrTxtMustBePositive)
+		err.Add("amount", http_helpers.ErrTxtMustBePositive)
 	}
 	if req.Description != nil {
 		if *req.Description == "" {
-			err = err.Add("description", http_helpers.ErrTxtEmpty)
+			err.Add("description", http_helpers.ErrTxtEmpty)
 		}
 		const maxDescriptionLength = 256
 		if utf8.RuneCountInString(*req.Description) > maxDescriptionLength {
-			err = err.Add("description", http_helpers.ErrTxtTooLong)
+			err.Add("description", http_helpers.ErrTxtTooLong)
 		}
 	}
 	if req.Date != nil && req.Date.IsZero() {
-		err = err.Add("date", http_helpers.ErrTxtZeroValue)
+		err.Add("date", http_helpers.ErrTxtZeroValue)
 	}
 
 	transactionType := parseTransactionType(req.Type)
 	if transactionType == model.TransactionTypeUnspecified {
-		err = err.Add("type", http_helpers.ErrTxtUnknown)
+		err.Add("type", http_helpers.ErrTxtUnknown)
 	}
 
 	transactionCategory := parseTransactionCategory(req.Category)
 	if transactionCategory == model.TransactionCategoryUnspecified {
-		err = err.Add("category", http_helpers.ErrTxtUnknown)
+		err.Add("category", http_helpers.ErrTxtUnknown)
 	}
 
 	if len(err.Violations()) > 0 {
-		return transacation_usecase.CreateTransactionReq{}, err
+		return transaction_usecase.CreateTransactionReq{}, err
 	}
 
-	return transacation_usecase.CreateTransactionReq{
+	return transaction_usecase.CreateTransactionReq{
 		Type:        transactionType,
 		Amount:      req.Amount,
 		Description: req.Description,

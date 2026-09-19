@@ -1,14 +1,14 @@
 package transaction_http_handler
 
 import (
-	"github.com/Kiveri/financial-manager/internal/service/usecases/transacation_usecase"
+	"github.com/Kiveri/financial-manager/internal/service/usecases/transaction_usecase"
 )
 
 type Handler struct {
-	transactionUseCase *transacation_usecase.UseCase
+	transactionUseCase *transaction_usecase.UseCase
 }
 
-func NewHandler(transactionUseCase *transacation_usecase.UseCase) *Handler {
+func NewHandler(transactionUseCase *transaction_usecase.UseCase) *Handler {
 	return &Handler{
 		transactionUseCase: transactionUseCase,
 	}

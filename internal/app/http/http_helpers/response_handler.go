@@ -23,15 +23,12 @@ func NewValidationError() *ValidationError {
 	return &ValidationError{}
 }
 
-// Add добавляет нарушение для указанного поля и возвращает тот же объект
-// для цепочки вызовов (fluent API).
-func (e *ValidationError) Add(field, message string) *ValidationError {
+// Add добавляет нарушение для указанного поля.
+func (e *ValidationError) Add(field, message string) {
 	e.violations = append(e.violations, FieldViolation{
 		Field:   field,
 		Message: message,
 	})
-
-	return e
 }
 
 // Violations возвращает собранный список нарушений для включения в JSON-ответ клиенту.
