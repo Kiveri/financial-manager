@@ -10,10 +10,10 @@ import (
 )
 
 type CreateTransactionReq struct {
-	Type        string
+	Type        model.TransactionType
 	Amount      int64
 	Description *string
-	Category    string
+	Category    model.TransactionCategory
 	Date        *time.Time
 }
 
